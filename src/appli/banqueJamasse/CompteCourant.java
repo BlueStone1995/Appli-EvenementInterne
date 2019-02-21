@@ -30,7 +30,9 @@ public class CompteCourant extends Compte {
     }
 
     public void setSeuilMin(float seuilMin) {
+        Float oldValue = this.seuilMin;
         this.seuilMin = seuilMin;
+        this.firePropertyChange("seuilMin", oldValue, seuilMin);
     }
 
     public float getSeuilMax() {

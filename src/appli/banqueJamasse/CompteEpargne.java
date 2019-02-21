@@ -6,9 +6,9 @@ public class CompteEpargne extends Compte {
 
     private int idCompteCourant;
     private float txInteret;
-    private String type;
+    private TypeEpargne type;
 
-    public CompteEpargne(int idCompte, float solde, Date dateOuverture, int idCompteCourant, float txInteret, String type) {
+    public CompteEpargne(int idCompte, float solde, Date dateOuverture, int idCompteCourant, float txInteret, TypeEpargne type) {
         super(idCompte, solde, dateOuverture);
         this.idCompteCourant = idCompteCourant;
         this.txInteret = txInteret;
@@ -31,11 +31,11 @@ public class CompteEpargne extends Compte {
         this.txInteret = txInteret;
     }
 
-    public String getType() {
+    public TypeEpargne getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(TypeEpargne type) {
         this.type = type;
     }
 

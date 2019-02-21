@@ -7,9 +7,9 @@ public class Operation {
     private int idOperation;
     private Date dateOperation;
     private float montant;
-    private String typeOperation;
+    private TypeOperation typeOperation;
 
-    public Operation(int idOperation, Date dateOperation, float montant, String typeOperation) {
+    public Operation(int idOperation, Date dateOperation, float montant, TypeOperation typeOperation) {
         this.idOperation = idOperation;
         this.dateOperation = dateOperation;
         this.montant = montant;
@@ -40,11 +40,11 @@ public class Operation {
         this.montant = montant;
     }
 
-    public String getTypeOperation() {
+    public TypeOperation getTypeOperation() {
         return typeOperation;
     }
 
-    public void setTypeOperation(String typeOperation) {
+    public void setTypeOperation(TypeOperation typeOperation) {
         this.typeOperation = typeOperation;
     }
 

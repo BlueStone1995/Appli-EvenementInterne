@@ -10,6 +10,7 @@ public abstract class Compte extends appli.lib.PropertyChangeSupport {
 
 
     public Compte(int idCompte, float solde, Date dateOuverture) {
+        super();
         this.idCompte = idCompte;
         this.solde = solde;
         this.dateOuverture = dateOuverture;
@@ -28,7 +29,9 @@ public abstract class Compte extends appli.lib.PropertyChangeSupport {
     }
 
     public void setSolde(float solde) {
+        Float oldValue = this.solde;
         this.solde = solde;
+        this.firePropertyChange("soldeCourant", oldValue, solde);
     }
 
     public Date getDateOuverture() {
