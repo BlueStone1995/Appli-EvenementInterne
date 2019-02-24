@@ -15,8 +15,7 @@ public class BanqueContext {
     public BanqueContext() {
     }
 
-    // TODO : A redéfinir
-    public Integer getSeuilMin() {
+    public Integer getMaxIdCompteCourant() {
         if (!compteCourant.isEmpty()) {
             Set<Integer> s = compteCourant.keySet();
             return (Collections.max(s));
@@ -24,8 +23,24 @@ public class BanqueContext {
 
     }
 
+    public Integer getMaxIdCompteEpargne() {
+        if (!compteEpargne.isEmpty()) {
+            Set<Integer> s = compteEpargne.keySet();
+            return (Collections.max(s));
+        } else return 0;
+
+    }
+
+    public Integer getMaxIdOperation() {
+        if (!operation.isEmpty()) {
+            Set<Integer> s = operation.keySet();
+            return (Collections.max(s));
+        } else return 0;
+
+    }
+
     public void addCompteCourant(CompteCourant c) {
-        c.addPropertyChangeListener("soldeCourant", alimentation);
+        c.addPropertyChangeListener("solde", alimentation);
         c.addPropertyChangeListener("seuilMin", alimentation);
         compteCourant.put(c.getIdCompte(), c);
     }
@@ -33,6 +48,10 @@ public class BanqueContext {
     public void addCompteEpargne(CompteEpargne c) {
         c.addPropertyChangeListener("epargne", epargne);
         compteEpargne.put(c.getIdCompte(), c);
+    }
+
+    public void addOperation(Operation o) {
+        operation.put(o.getIdOperation(), o);
     }
 
     public CompteCourant getCompteCourant(Integer id) {
