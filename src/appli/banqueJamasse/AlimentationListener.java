@@ -39,8 +39,8 @@ public class AlimentationListener implements PropertyChangeListener {
     private void trigger_evt(PropertyChangeEvent evt) {
 
         // Traitement alimentation compte courant par le compte epargne ou modification seuilMin
-        System.out.println("trigger Event ");
-        System.out.println("compte courant :" + evt.getSource());
+        System.out.println("Trigger Event ");
+        System.out.println(evt.getSource());
         System.out.println("property " + evt.getPropertyName() + " old solde " + evt.getOldValue() + " new solde " + evt.getNewValue());
 
         if (evt.getPropertyName().equals("solde")) {

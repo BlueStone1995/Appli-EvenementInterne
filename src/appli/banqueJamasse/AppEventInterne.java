@@ -12,9 +12,26 @@ public class AppEventInterne {
 
         BanqueContext context = new BanqueContext();
         Date today = new Date();
-        CompteCourant compteCourant = new CompteCourant(0, 100, today, 0, 100, 1000, false);
+
+        CompteCourant compteCourant = new CompteCourant(0, 200, today, 0, 100, 1000, false);
         context.addCompteCourant(compteCourant);
 
+        CompteEpargne compteEpargne = new CompteEpargne(0, 1000, today, 0, 0.07f, TypeEpargne.LIVRET_A);
+        context.addCompteEpargne(compteEpargne);
+
+        compteCourant.setSolde(-100);
+        System.out.println("Après décrément du compte courant");
+        System.out.println("liste compte courant :");
+        AffichageCollections(context.getCompteCourants());
+        System.out.println("liste opérations :");
+        AffichageCollections(context.getOperations());
+
+        compteCourant.setSeuilMin(200);
+        System.out.println("Après changement seuil minimum");
+        System.out.println("liste compte courant :");
+        AffichageCollections(context.getCompteCourants());
+        System.out.println("liste opérations :");
+        AffichageCollections(context.getOperations());
     }
 
     static void AffichageCollections(Collection c) {
