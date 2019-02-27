@@ -23,6 +23,8 @@ public class AppEventInterne {
         System.out.println("Après décrément du compte courant");
         System.out.println("liste compte courant :");
         AffichageCollections(context.getCompteCourants());
+        System.out.println("liste compte epargne :");
+        AffichageCollections(context.getCompteEpargnes());
         System.out.println("liste opérations :");
         AffichageCollections(context.getOperations());
 
@@ -30,8 +32,9 @@ public class AppEventInterne {
         System.out.println("Après changement seuil minimum");
         System.out.println("liste compte courant :");
         AffichageCollections(context.getCompteCourants());
-        System.out.println("liste opérations :");
-        AffichageCollections(context.getOperations());
+        System.out.println("liste compte epargne :");
+        AffichageCollections(context.getCompteEpargnes());
+
     }
 
     static void AffichageCollections(Collection c) {

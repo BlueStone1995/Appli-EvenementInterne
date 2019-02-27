@@ -44,7 +44,7 @@ public class AlimentationListener implements PropertyChangeListener {
         System.out.println("property " + evt.getPropertyName() + " old solde " + evt.getOldValue() + " new solde " + evt.getNewValue());
 
         if (evt.getPropertyName().equals("solde")) {
-            float montantDebit, montantCredit;
+            float montantDebit, montantCredit, newSoldeE, newSoldeC;
             Date date = new Date();
             TypeOperation typeOperation = TypeOperation.CB;
 
@@ -55,16 +55,29 @@ public class AlimentationListener implements PropertyChangeListener {
 
             float montant = c.getSeuilMin() - (Float) evt.getNewValue();
 
+            System.out.println("Montant : " + montant);
+            System.out.println(e);
             if (e.getSolde() > montant) {
+                newSoldeE = e.getSolde() - montant;
+                newSoldeC = c.getSolde() + montant;
                 montantDebit = -montant;
                 montantCredit = montant;
             } else if (e.getSolde() > 0) {
+                newSoldeE = 0;
+                newSoldeC = c.getSolde() - e.getSolde();
                 montantDebit = -e.getSolde();
                 montantCredit = e.getSolde();
             } else {
                 return;
             }
 
+            System.out.println("Montant débit : " + montantDebit);
+            System.out.println("Montant credit : " + montantCredit);
+            System.out.println("Montant epargne : " + newSoldeE);
+            System.out.println("Montant courant : " + newSoldeC);
+
+            // e.setSolde(newSoldeE);
+            // c.setSolde(newSoldeC);
             Operation opCourant = new Operation(context.getMaxIdOperation() + 1, date, montantCredit, typeOperation);
             Operation opEpargne = new Operation(context.getMaxIdOperation() + 1, date, montantDebit, typeOperation);
 
