@@ -76,6 +76,7 @@ public class AlimentationListener implements PropertyChangeListener {
             System.out.println("Montant epargne : " + newSoldeE);
             System.out.println("Montant courant : " + newSoldeC);
 
+            // TODO : Mettre à jour solde
             // e.setSolde(newSoldeE);
             // c.setSolde(newSoldeC);
             Operation opCourant = new Operation(context.getMaxIdOperation() + 1, date, montantCredit, typeOperation);
