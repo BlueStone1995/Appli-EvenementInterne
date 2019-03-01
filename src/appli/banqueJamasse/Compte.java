@@ -34,6 +34,14 @@ public abstract class Compte extends appli.lib.PropertyChangeSupport {
         this.firePropertyChange("solde", oldValue, solde);
     }
 
+    public void crediter(float credit) {
+        this.solde += credit;
+    }
+
+    public void debiter(float debit) {
+        this.solde -= debit;
+    }
+
     public Date getDateOuverture() {
         return dateOuverture;
     }

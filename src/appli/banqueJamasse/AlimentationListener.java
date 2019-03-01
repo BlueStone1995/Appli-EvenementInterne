@@ -25,13 +25,13 @@ public class AlimentationListener implements PropertyChangeListener {
             Float oldValue = (Float) evt.getOldValue();
             Float newValue = (Float) evt.getNewValue();
             Float s = c.getSeuilMin();
-            res = (oldValue > s && (newValue <= s));
+            res = (oldValue >= s && (newValue < s));
         } else if (evt.getPropertyName().equals("seuilMin")) {
             CompteCourant c = (CompteCourant) evt.getSource();
             Float oldValue = (Float) evt.getOldValue();
             Float newValue = (Float) evt.getNewValue();
             Float seuil = c.getSeuilMin();
-            res = (oldValue == seuil && (newValue != seuil));
+            res = (!oldValue.equals(seuil) && (newValue.equals(seuil)));
         }
         return res;
     }
@@ -41,56 +41,53 @@ public class AlimentationListener implements PropertyChangeListener {
         // Traitement alimentation compte courant par le compte epargne ou modification seuilMin
         System.out.println("Trigger Event ");
         System.out.println(evt.getSource());
-        System.out.println("property " + evt.getPropertyName() + " old solde " + evt.getOldValue() + " new solde " + evt.getNewValue());
+        System.out.println("property " + evt.getPropertyName() + " old value " + evt.getOldValue() + " new value " + evt.getNewValue());
+
+        CompteCourant c = (CompteCourant) evt.getSource();
 
         if (evt.getPropertyName().equals("solde")) {
-            float montantDebit, montantCredit, newSoldeE, newSoldeC;
-            Date date = new Date();
-            TypeOperation typeOperation = TypeOperation.CB;
-
-            CompteCourant c = (CompteCourant) evt.getSource();
 
             int idCompteEpargne = c.getIdCompteEpargne();
             CompteEpargne e = context.getCompteEpargne(idCompteEpargne);
 
-            float montant = c.getSeuilMin() - (Float) evt.getNewValue();
+            Date date = new Date();
+            float montant;
 
-            System.out.println("Montant : " + montant);
-            System.out.println(e);
-            if (e.getSolde() > montant) {
-                newSoldeE = e.getSolde() - montant;
-                newSoldeC = c.getSolde() + montant;
-                montantDebit = -montant;
-                montantCredit = montant;
-            } else if (e.getSolde() > 0) {
-                newSoldeE = 0;
-                newSoldeC = c.getSolde() - e.getSolde();
-                montantDebit = -e.getSolde();
-                montantCredit = e.getSolde();
-            } else {
+            montant = c.getSeuilMin() - (Float) evt.getNewValue();
+
+            if (e.getSolde() <= 0) {
+                System.out.println("Alimentation compte courant refusé");
                 return;
+            } else if (montant > e.getSolde()) {
+                montant = e.getSolde();
             }
 
-            System.out.println("Montant débit : " + montantDebit);
-            System.out.println("Montant credit : " + montantCredit);
-            System.out.println("Montant epargne : " + newSoldeE);
-            System.out.println("Montant courant : " + newSoldeC);
+            System.out.println("Montant : " + montant);
 
-            // TODO : Mettre à jour solde compte epargne
-
-            c.setSolde(newSoldeC);
-            // e.setSolde(newSoldeE);
-            Operation opCourant = new Operation(context.getMaxIdOperation() + 1, date, montantCredit, typeOperation);
-            Operation opEpargne = new Operation(context.getMaxIdOperation() + 1, date, montantDebit, typeOperation);
-
+            c.setSolde(c.getSolde() + montant);
             context.addCompteCourant(c);
+
+            e.debiter(montant);
             context.addCompteEpargne(e);
-            context.addOperation(opCourant);
-            context.addOperation(opEpargne);
+
+            newOperation(date, montant);
+            newOperation(date, -montant);
+
         } else if (evt.getPropertyName().equals("seuilMin")) {
-            CompteCourant c = (CompteCourant) evt.getSource();
-            c.setSeuilMin((Float) evt.getNewValue());
+
+            float newSeuil = (Float) evt.getNewValue();
+            float oldSeuil = (Float) evt.getOldValue();
+
+            if (newSeuil > c.getSolde()) {
+                c.setSeuilMin(oldSeuil);
+            }
+
             context.addCompteCourant(c);
         }
+    }
+
+    private void newOperation(Date date, float montant) {
+        Operation operation = new Operation(context.getMaxIdOperation() + 1, date, -montant, TypeOperation.VIREMENT);
+        context.addOperation(operation);
     }
 }
