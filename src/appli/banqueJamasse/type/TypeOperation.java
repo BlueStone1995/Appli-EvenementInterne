@@ -5,5 +5,6 @@ public enum TypeOperation {
     GUICHET,
     CHEQUE,
     VIREMENT,
-    ESPECE
+    ESPECE,
+    INTERET
 }
