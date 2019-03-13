@@ -33,7 +33,7 @@ public class AppEventInterne {
         System.out.println("liste opérations :");
         AffichageCollections(context.getOperations());
 
-        compteCourant.setSolde(50);
+        compteCourant.debiter(50);
         System.out.println("Après décrément du compte courant");
         System.out.println("liste compte courant :");
         AffichageCollections(context.getCompteCourants());

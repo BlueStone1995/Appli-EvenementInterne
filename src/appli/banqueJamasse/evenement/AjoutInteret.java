@@ -3,9 +3,6 @@ package appli.banqueJamasse.evenement;
 import appli.banqueJamasse.context.BanqueContext;
 import appli.banqueJamasse.objets.CompteEpargne;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.TimerTask;
 
 public class AjoutInteret extends TimerTask {
@@ -20,5 +17,7 @@ public class AjoutInteret extends TimerTask {
 
     public void run() {
         System.out.println("exécution taux interet");
+        Float tx = this.epargne.getTxInteret();
+        this.epargne.setSolde(this.epargne.getSolde() + this.epargne.getSolde()*tx);
     }
 }

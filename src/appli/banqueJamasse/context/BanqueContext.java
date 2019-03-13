@@ -1,12 +1,17 @@
 package appli.banqueJamasse.context;
 
+import appli.banqueJamasse.evenement.AjoutInteret;
+import appli.banqueJamasse.objets.Compte;
 import appli.banqueJamasse.objets.CompteCourant;
 import appli.banqueJamasse.objets.CompteEpargne;
 import appli.banqueJamasse.objets.Operation;
 import appli.banqueJamasse.evenement.AlimentationListener;
 import appli.banqueJamasse.evenement.EpargneListener;
+import appli.banqueJamasse.type.TypeOperation;
 
 import java.beans.PropertyChangeListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class BanqueContext {
@@ -20,6 +25,29 @@ public class BanqueContext {
 
 
     public BanqueContext() {
+    }
+
+    public void debiter(Compte c, float debit) {
+        Date date = new Date();
+        c.setSolde(c.getSolde() - debit);
+        Operation op = new Operation(this.getMaxIdOperation() + 1, date, -debit, TypeOperation.CB, c, c);
+        this.addOperation(op);
+    }
+
+    public void crediter(Compte c, Compte d, float credit) {
+        if (d.getSolde() < credit) {
+            System.out.println("Credit impossible");
+        } else {
+            Date date = new Date();
+            c.setSolde(c.getSolde() + credit);
+            d.setSolde(d.getSolde() - credit);
+
+            Operation opCredit = new Operation(this.getMaxIdOperation() + 1, date, credit, TypeOperation.CB, d, c);
+            this.addOperation(opCredit);
+
+            Operation opDebit = new Operation(this.getMaxIdOperation() + 1, date, -credit, TypeOperation.CB, c, d);
+            this.addOperation(opDebit);
+        }
     }
 
     public Integer getMaxIdCompteCourant() {
@@ -55,6 +83,9 @@ public class BanqueContext {
 
     public void addCompteEpargne(CompteEpargne c) {
         compteEpargne.put(c.getIdCompte(), c);
+        // DateFormat fd = new SimpleDateFormat("dd/MM/yyyy");
+        // String d = fd.format(Calendar.getInstance().getTime());
+        agenda.schedule(new AjoutInteret(c, this), 1);
     }
 
     public void addOperation(Operation o) {
