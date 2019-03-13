@@ -71,10 +71,8 @@ public class AlimentationListener implements PropertyChangeListener {
             System.out.println("Montant : " + montant);
 
             c.setSolde(c.getSolde() + montant);
-            context.addCompteCourant(c);
 
             e.debiter(montant);
-            context.addCompteEpargne(e);
 
             newOperation(date, montant);
             newOperation(date, -montant);
@@ -88,7 +86,6 @@ public class AlimentationListener implements PropertyChangeListener {
                 c.setSeuilMin(oldSeuil);
             }
 
-            context.addCompteCourant(c);
         }
     }
 
