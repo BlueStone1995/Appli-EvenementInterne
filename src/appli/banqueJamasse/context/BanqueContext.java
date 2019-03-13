@@ -1,5 +1,7 @@
 package appli.banqueJamasse.context;
 
+import appli.banqueJamasse.evenement.CreditListener;
+import appli.banqueJamasse.evenement.DebitListener;
 import appli.banqueJamasse.objets.CompteCourant;
 import appli.banqueJamasse.objets.CompteEpargne;
 import appli.banqueJamasse.objets.Operation;
@@ -16,6 +18,9 @@ public class BanqueContext {
     final private Map<Integer, CompteCourant> compteCourant = new HashMap<>();
     final private PropertyChangeListener epargne = new EpargneListener(this);
     final private PropertyChangeListener alimentation = new AlimentationListener(this);
+    final private PropertyChangeListener debit = new DebitListener(this);
+    final private PropertyChangeListener credit = new CreditListener(this);
+    final private Timer agenda = new Timer();// pour les événements temporels
 
 
     public BanqueContext() {
