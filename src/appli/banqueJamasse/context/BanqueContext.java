@@ -49,11 +49,11 @@ public class BanqueContext {
     public void addCompteCourant(CompteCourant c) {
         c.addPropertyChangeListener("solde", alimentation);
         c.addPropertyChangeListener("seuilMin", alimentation);
+        c.addPropertyChangeListener("epargne", epargne);
         compteCourant.put(c.getIdCompte(), c);
     }
 
     public void addCompteEpargne(CompteEpargne c) {
-        c.addPropertyChangeListener("epargne", epargne);
         compteEpargne.put(c.getIdCompte(), c);
     }
 
