@@ -2,7 +2,10 @@ package appli.banqueJamasse.evenement;
 
 import appli.banqueJamasse.context.BanqueContext;
 import appli.banqueJamasse.objets.CompteEpargne;
+import appli.banqueJamasse.objets.Operation;
+import appli.banqueJamasse.type.TypeOperation;
 
+import java.util.Date;
 import java.util.TimerTask;
 
 public class AjoutInteret extends TimerTask {
@@ -18,6 +21,11 @@ public class AjoutInteret extends TimerTask {
     public void run() {
         System.out.println("exécution taux interet");
         Float tx = this.epargne.getTxInteret();
-        this.epargne.setSolde(this.epargne.getSolde() + this.epargne.getSolde()*tx);
+        Float newSolde = this.epargne.getSolde() + this.epargne.getSolde()*tx;
+        this.epargne.setSolde(newSolde);
+
+        Date date = new Date();
+        Operation opDebit = new Operation(this.context.getMaxIdOperation() + 1, date, newSolde, TypeOperation.VIREMENT, epargne, epargne);
+        this.context.addOperation(opDebit);
     }
 }
