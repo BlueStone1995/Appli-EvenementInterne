@@ -36,8 +36,7 @@ public class AlimentationListener implements PropertyChangeListener {
             CompteCourant c = (CompteCourant) evt.getSource();
             Float oldValue = (Float) evt.getOldValue();
             Float newValue = (Float) evt.getNewValue();
-            Float seuil = c.getSeuilMin();
-            res = (!oldValue.equals(seuil) && (newValue.equals(seuil)));
+            res = ((c.getSolde() >= oldValue) && (c.getSolde() < newValue));
         }
         return res;
     }
@@ -49,48 +48,36 @@ public class AlimentationListener implements PropertyChangeListener {
         System.out.println(evt.getSource());
         System.out.println("property " + evt.getPropertyName() + " old value " + evt.getOldValue() + " new value " + evt.getNewValue());
 
+        if (evt.getPropertyName().equals("solde")) System.out.println("Générée suite à un changement de solde");
+        else System.out.println("Générée suite à un changement de seuil");
+
         CompteCourant c = (CompteCourant) evt.getSource();
 
-        if (evt.getPropertyName().equals("solde")) {
+        int idCompteEpargne = c.getIdCompteEpargne();
+        CompteEpargne e = context.getCompteEpargne(idCompteEpargne);
 
-            int idCompteEpargne = c.getIdCompteEpargne();
-            CompteEpargne e = context.getCompteEpargne(idCompteEpargne);
+        Date date = new Date();
+        float montant;
 
-            Date date = new Date();
-            float montant;
+        montant = c.getSeuilMin() - c.getSolde();
 
-            montant = c.getSeuilMin() - (Float) evt.getNewValue();
-
-            if (e.getSolde() <= 0) {
-                System.out.println("Alimentation compte courant refusé");
-                return;
-            } else if (montant > e.getSolde()) {
-                montant = e.getSolde();
-            }
-
-            System.out.println("Montant : " + montant);
-
-            c.setSolde(c.getSolde() + montant);
-
-            e.debiter(montant);
-
-            newOperation(date, montant);
-            newOperation(date, -montant);
-
-        } else if (evt.getPropertyName().equals("seuilMin")) {
-
-            float newSeuil = (Float) evt.getNewValue();
-            float oldSeuil = (Float) evt.getOldValue();
-
-            if (newSeuil > c.getSolde()) {
-                c.setSeuilMin(oldSeuil);
-            }
-
+        if (e.getSolde() <= 0) {
+            System.out.println("Alimentation compte courant refusé");
+            return;
+        } else if (montant > e.getSolde()) {
+            montant = e.getSolde();
         }
-    }
 
-    private void newOperation(Date date, float montant) {
-        Operation operation = new Operation(context.getMaxIdOperation() + 1, date, -montant, TypeOperation.VIREMENT);
-        context.addOperation(operation);
+        System.out.println("Montant : " + montant);
+
+        c.setSolde(c.getSolde() + montant);
+
+        e.debiter(montant);
+
+        Operation operationEpargne = new Operation(context.getMaxIdOperation() + 1, date, -montant, TypeOperation.VIREMENT, e, c);
+        context.addOperation(operationEpargne);
+
+        Operation operationCourant = new Operation(context.getMaxIdOperation() + 1, date, montant, TypeOperation.CB, c, e);
+        context.addOperation(operationCourant);
     }
 }
