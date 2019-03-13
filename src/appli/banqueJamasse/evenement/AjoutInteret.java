@@ -21,11 +21,13 @@ public class AjoutInteret extends TimerTask {
     public void run() {
         System.out.println("exécution taux interet");
         Float tx = this.epargne.getTxInteret();
-        Float newSolde = this.epargne.getSolde() + this.epargne.getSolde()*tx;
+        Float newSolde = this.epargne.getSolde() * (1 + tx);
         this.epargne.setSolde(newSolde);
 
         Date date = new Date();
         Operation opDebit = new Operation(this.context.getMaxIdOperation() + 1, date, newSolde, TypeOperation.INTERET, epargne, epargne);
         this.context.addOperation(opDebit);
+
+        this.context.getAgenda().schedule(this, 1);
     }
 }

@@ -64,6 +64,7 @@ public class AppEventInterne {
         AffichageCollections(context.getCompteEpargnes());
         System.out.println("liste opérations :");
         AffichageCollections(context.getOperations());
+        context.close();
     }
 
     static void AffichageCollections(Collection c) {

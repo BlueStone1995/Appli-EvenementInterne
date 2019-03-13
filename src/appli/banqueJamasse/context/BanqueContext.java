@@ -26,6 +26,9 @@ public class BanqueContext {
 
     public BanqueContext() {
     }
+    public void close() {
+        agenda.cancel();
+    }
 
     public void debiter(Compte c, float debit) {
         Date date = new Date();
@@ -83,8 +86,6 @@ public class BanqueContext {
 
     public void addCompteEpargne(CompteEpargne c) {
         compteEpargne.put(c.getIdCompte(), c);
-        // DateFormat fd = new SimpleDateFormat("dd/MM/yyyy");
-        // String d = fd.format(Calendar.getInstance().getTime());
         agenda.schedule(new AjoutInteret(c, this), 1);
     }
 
@@ -116,4 +117,7 @@ public class BanqueContext {
         return operation.values();
     }
 
+    public Timer getAgenda() {
+        return agenda;
+    }
 }
