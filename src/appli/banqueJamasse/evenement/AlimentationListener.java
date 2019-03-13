@@ -1,4 +1,10 @@
-package appli.banqueJamasse;
+package appli.banqueJamasse.evenement;
+
+import appli.banqueJamasse.context.BanqueContext;
+import appli.banqueJamasse.objets.CompteCourant;
+import appli.banqueJamasse.objets.CompteEpargne;
+import appli.banqueJamasse.objets.Operation;
+import appli.banqueJamasse.type.TypeOperation;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

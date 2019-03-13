@@ -1,4 +1,9 @@
-package appli.banqueJamasse;
+package appli.banqueJamasse.main;
+
+import appli.banqueJamasse.context.BanqueContext;
+import appli.banqueJamasse.objets.CompteCourant;
+import appli.banqueJamasse.objets.CompteEpargne;
+import appli.banqueJamasse.type.TypeEpargne;
 
 import java.util.Collection;
 import java.util.Date;

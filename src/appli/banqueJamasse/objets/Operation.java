@@ -1,4 +1,6 @@
-package appli.banqueJamasse;
+package appli.banqueJamasse.objets;
+
+import appli.banqueJamasse.type.TypeOperation;
 
 import java.util.Date;
 

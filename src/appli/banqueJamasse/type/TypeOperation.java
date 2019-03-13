@@ -1,4 +1,4 @@
-package appli.banqueJamasse;
+package appli.banqueJamasse.type;
 
 public enum TypeOperation {
     CB,
