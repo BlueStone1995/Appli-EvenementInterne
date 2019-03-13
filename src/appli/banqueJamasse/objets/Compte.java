@@ -29,9 +29,7 @@ public abstract class Compte extends appli.lib.PropertyChangeSupport {
     }
 
     public void setSolde(float solde) {
-        Float oldValue = this.solde;
         this.solde = solde;
-        this.firePropertyChange("solde", oldValue, solde);
     }
 
     public void crediter(float credit) {
