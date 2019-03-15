@@ -59,6 +59,16 @@ public class CompteCourant extends Compte {
     }
 
     @Override
+    public void crediter(float credit) {
+        this.setSolde(this.getSolde() + credit);
+    }
+
+    @Override
+    public void debiter(float debit) {
+        this.setSolde(this.getSolde() - debit);
+    }
+
+    @Override
     public String toString() {
         return "CompteCourant{" +
                 "idCompteEpargne=" + idCompteEpargne +
