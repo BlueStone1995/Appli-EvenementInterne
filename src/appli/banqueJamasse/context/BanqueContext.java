@@ -10,8 +10,6 @@ import appli.banqueJamasse.evenement.EpargneListener;
 import appli.banqueJamasse.type.TypeOperation;
 
 import java.beans.PropertyChangeListener;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class BanqueContext {
@@ -21,7 +19,7 @@ public class BanqueContext {
     final private Map<Integer, CompteCourant> compteCourant = new HashMap<>();
     final private PropertyChangeListener epargne = new EpargneListener(this);
     final private PropertyChangeListener alimentation = new AlimentationListener(this);
-    final private Timer agenda = new Timer();// pour les événements temporels
+    final private Timer agenda = new Timer("Interet");// pour les événements temporels
 
 
     public BanqueContext() {
@@ -86,7 +84,7 @@ public class BanqueContext {
 
     public void addCompteEpargne(CompteEpargne c) {
         compteEpargne.put(c.getIdCompte(), c);
-        agenda.schedule(new AjoutInteret(c, this), 1);
+        agenda.schedule(new AjoutInteret(c, this), 0, 100);
     }
 
     public void addOperation(Operation o) {

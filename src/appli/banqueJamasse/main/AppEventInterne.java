@@ -8,6 +8,8 @@ import appli.banqueJamasse.type.TypeEpargne;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AppEventInterne {
     /**
@@ -64,7 +66,17 @@ public class AppEventInterne {
         AffichageCollections(context.getCompteEpargnes());
         System.out.println("liste opérations :");
         AffichageCollections(context.getOperations());
+
+        System.out.println("liste compte epargne :");
+        AffichageCollections(context.getCompteEpargnes());
+        System.out.println("liste opérations :");
+        AffichageCollections(context.getOperations());
         context.close();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(AppEventInterne.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     static void AffichageCollections(Collection c) {
