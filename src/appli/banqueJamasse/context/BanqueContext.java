@@ -84,7 +84,7 @@ public class BanqueContext {
 
     public void addCompteEpargne(CompteEpargne c) {
         compteEpargne.put(c.getIdCompte(), c);
-        agenda.schedule(new AjoutInteret(c, this), 0, 100);
+        agenda.schedule(new AjoutInteret(c, this), 100, 50);
     }
 
     public void addOperation(Operation o) {

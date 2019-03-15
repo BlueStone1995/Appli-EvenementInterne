@@ -27,8 +27,5 @@ public class AjoutInteret extends TimerTask {
         Date date = new Date();
         Operation opDebit = new Operation(this.context.getMaxIdOperation() + 1, date, newSolde, TypeOperation.INTERET, epargne, epargne);
         this.context.addOperation(opDebit);
-
-        // this.context.getAgenda();
-        //this.context.getAgenda().schedule(this, 10);
     }
 }
