@@ -40,7 +40,9 @@ public class CompteCourant extends Compte {
     }
 
     public void setSeuilMax(float seuilMax) {
+        Float oldValue = this.seuilMax;
         this.seuilMax = seuilMax;
+        this.firePropertyChange("seuilMax", oldValue, seuilMax);
     }
 
     public boolean isAutorisationDecouvert() {
@@ -56,6 +58,7 @@ public class CompteCourant extends Compte {
         Float oldValue = this.solde;
         this.solde = solde;
         this.firePropertyChange("solde", oldValue, solde);
+        this.firePropertyChange("epargne", oldValue, solde);
     }
 
     @Override

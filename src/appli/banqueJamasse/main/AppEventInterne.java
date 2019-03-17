@@ -20,14 +20,18 @@ public class AppEventInterne {
             BanqueContext context = new BanqueContext();
             Date today = new Date();
 
-            CompteCourant compteCourant = new CompteCourant(0, 200, today, 0, 100, 1000, false);
+            CompteCourant compteCourant = new CompteCourant(0, 200, today, 0, 100, 200, false);
             context.addCompteCourant(compteCourant);
 
             CompteEpargne compteEpargne = new CompteEpargne(0, 1000, today, 0, 0.07f, TypeEpargne.LIVRET_A);
             context.addCompteEpargne(compteEpargne);
 
-            compteCourant.setSolde(-100);
+            // compteCourant.setSolde(-100);
+            // System.out.println("Après décrément du compte courant");
+
+            compteCourant.setSolde(400);
             System.out.println("Après décrément du compte courant");
+
             System.out.println("liste compte courant :");
             AffichageCollections(context.getCompteCourants());
             System.out.println("liste compte epargne :");
@@ -35,8 +39,8 @@ public class AppEventInterne {
             System.out.println("liste opérations :");
             AffichageCollections(context.getOperations());
 
-            compteCourant.debiter(50);
-            System.out.println("Après débit du compte courant");
+            context.debiter(compteEpargne, 50);
+            System.out.println("Après débit du compte epargne");
             System.out.println("liste compte courant :");
             AffichageCollections(context.getCompteCourants());
             System.out.println("liste compte epargne :");
@@ -53,7 +57,7 @@ public class AppEventInterne {
             System.out.println("liste opérations :");
             AffichageCollections(context.getOperations());
 
-            compteCourant.setSeuilMin(50);
+            compteCourant.setSeuilMax(400);
             System.out.println("Après changement seuil minimum");
             System.out.println("liste compte courant :");
             AffichageCollections(context.getCompteCourants());
@@ -62,7 +66,7 @@ public class AppEventInterne {
             System.out.println("liste opérations :");
             AffichageCollections(context.getOperations());
 
-            compteCourant.crediter(40);
+            context.crediter(compteCourant, compteEpargne, 400);
             System.out.println("Après crédit du compte courant");
             System.out.println("liste compte courant :");
             AffichageCollections(context.getCompteCourants());

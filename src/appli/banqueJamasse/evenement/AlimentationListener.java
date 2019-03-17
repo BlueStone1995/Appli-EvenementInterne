@@ -49,7 +49,7 @@ public class AlimentationListener implements PropertyChangeListener {
         System.out.println("property " + evt.getPropertyName() + " old value " + evt.getOldValue() + " new value " + evt.getNewValue());
 
         if (evt.getPropertyName().equals("solde")) System.out.println("Générée suite à un changement de solde");
-        else System.out.println("Générée suite à un changement de seuil");
+        else System.out.println("Générée suite à un changement de seuilMin");
 
         CompteCourant c = (CompteCourant) evt.getSource();
 
@@ -74,10 +74,10 @@ public class AlimentationListener implements PropertyChangeListener {
 
         e.debiter(montant);
 
-        Operation operationEpargne = new Operation(context.getMaxIdOperation() + 1, date, -montant, TypeOperation.VIREMENT, e, c);
+        Operation operationEpargne = new Operation(context.getMaxIdOperation() + 1, date, -montant, TypeOperation.VIREMENT, e);
         context.addOperation(operationEpargne);
 
-        Operation operationCourant = new Operation(context.getMaxIdOperation() + 1, date, montant, TypeOperation.CB, c, e);
+        Operation operationCourant = new Operation(context.getMaxIdOperation() + 1, date, montant, TypeOperation.CB, c);
         context.addOperation(operationCourant);
     }
 }

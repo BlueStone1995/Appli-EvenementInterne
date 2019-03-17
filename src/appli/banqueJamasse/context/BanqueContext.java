@@ -24,6 +24,7 @@ public class BanqueContext {
 
     public BanqueContext() {
     }
+
     public void close() {
         agenda.cancel();
     }
@@ -31,7 +32,7 @@ public class BanqueContext {
     public void debiter(Compte c, float debit) {
         Date date = new Date();
         c.setSolde(c.getSolde() - debit);
-        Operation op = new Operation(this.getMaxIdOperation() + 1, date, -debit, TypeOperation.CB, c, c);
+        Operation op = new Operation(this.getMaxIdOperation() + 1, date, -debit, TypeOperation.CB, c);
         this.addOperation(op);
     }
 
@@ -43,10 +44,10 @@ public class BanqueContext {
             c.setSolde(c.getSolde() + credit);
             d.setSolde(d.getSolde() - credit);
 
-            Operation opCredit = new Operation(this.getMaxIdOperation() + 1, date, credit, TypeOperation.CB, d, c);
+            Operation opCredit = new Operation(this.getMaxIdOperation() + 1, date, credit, TypeOperation.CB, c);
             this.addOperation(opCredit);
 
-            Operation opDebit = new Operation(this.getMaxIdOperation() + 1, date, -credit, TypeOperation.CB, c, d);
+            Operation opDebit = new Operation(this.getMaxIdOperation() + 1, date, -credit, TypeOperation.CB, d);
             this.addOperation(opDebit);
         }
     }
@@ -79,6 +80,7 @@ public class BanqueContext {
         c.addPropertyChangeListener("solde", alimentation);
         c.addPropertyChangeListener("seuilMin", alimentation);
         c.addPropertyChangeListener("epargne", epargne);
+        c.addPropertyChangeListener("seuilMax", epargne);
         compteCourant.put(c.getIdCompte(), c);
     }
 
