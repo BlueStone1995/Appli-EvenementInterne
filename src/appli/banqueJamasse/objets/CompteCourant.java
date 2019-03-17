@@ -8,13 +8,15 @@ public class CompteCourant extends Compte {
     private float seuilMin;
     private float seuilMax;
     private boolean autorisationDecouvert;
+    private CompteEpargne forcementCompte;
 
-    public CompteCourant(int idCompte, float solde, Date dateOuverture, int idCompteEpargne, float seuilMin, float seuilMax, boolean autorisationDecouvert) {
+    public CompteCourant(int idCompte, float solde, Date dateOuverture, int idCompteEpargne, float seuilMin, float seuilMax, boolean autorisationDecouvert,CompteEpargne forcementCompte) {
         super(idCompte, solde, dateOuverture);
         this.idCompteEpargne = idCompteEpargne;
         this.seuilMin = seuilMin;
         this.seuilMax = seuilMax;
         this.autorisationDecouvert = autorisationDecouvert;
+        this.forcementCompte = forcementCompte;
     }
 
     public int getIdCompteEpargne() {
@@ -50,6 +52,13 @@ public class CompteCourant extends Compte {
     public void setAutorisationDecouvert(boolean autorisationDecouvert) {
         this.autorisationDecouvert = autorisationDecouvert;
     }
+    public CompteEpargne getCompteForcement() {
+        return forcementCompte; 
+    }
+
+    public void setCompteForcement(CompteEpargne forcementCompte) { 
+        this.forcementCompte = forcementCompte; 
+    }
 
     @Override
     public void setSolde(float solde) {
@@ -78,6 +87,6 @@ public class CompteCourant extends Compte {
                 ", idCompte=" + idCompte +
                 ", solde=" + solde +
                 ", dateOuverture=" + dateOuverture +
-                '}';
+                "\n\nForcement de l'épargne : " + forcementCompte;
     }
 }
