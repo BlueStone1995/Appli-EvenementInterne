@@ -20,67 +20,53 @@ public class AppEventInterne {
             BanqueContext context = new BanqueContext();
             Date today = new Date();
 
-            CompteCourant compteCourant = new CompteCourant(0, 200, today, 0, 100, 200, false);
+            CompteCourant compteCourant = new CompteCourant(0, 200, today, 0, 100, 300, false);
             context.addCompteCourant(compteCourant);
 
             CompteEpargne compteEpargne = new CompteEpargne(0, 1000, today, 0, 0.07f, TypeEpargne.LIVRET_A);
             context.addCompteEpargne(compteEpargne);
 
-            // compteCourant.setSolde(-100);
-            // System.out.println("Après décrément du compte courant");
-
             compteCourant.setSolde(400);
-            System.out.println("Après décrément du compte courant");
-
-            System.out.println("liste compte courant :");
+            System.out.println("Après modif sur compte courant");
             AffichageCollections(context.getCompteCourants());
-            System.out.println("liste compte epargne :");
             AffichageCollections(context.getCompteEpargnes());
-            System.out.println("liste opérations :");
             AffichageCollections(context.getOperations());
 
-            context.debiter(compteEpargne, 50);
-            System.out.println("Après débit du compte epargne");
-            System.out.println("liste compte courant :");
+            compteCourant.setSolde(-100);
+            System.out.println("Après modif sur compte courant");
             AffichageCollections(context.getCompteCourants());
-            System.out.println("liste compte epargne :");
             AffichageCollections(context.getCompteEpargnes());
-            System.out.println("liste opérations :");
-            AffichageCollections(context.getOperations());
-
-            compteCourant.setSeuilMin(200);
-            System.out.println("Après changement seuil minimum");
-            System.out.println("liste compte courant :");
-            AffichageCollections(context.getCompteCourants());
-            System.out.println("liste compte epargne :");
-            AffichageCollections(context.getCompteEpargnes());
-            System.out.println("liste opérations :");
             AffichageCollections(context.getOperations());
 
             compteCourant.setSeuilMax(400);
-            System.out.println("Après changement seuil minimum");
-            System.out.println("liste compte courant :");
+            compteCourant.setSolde(500);
+            System.out.println("Après changement seuil max");
             AffichageCollections(context.getCompteCourants());
-            System.out.println("liste compte epargne :");
             AffichageCollections(context.getCompteEpargnes());
-            System.out.println("liste opérations :");
             AffichageCollections(context.getOperations());
 
-            context.crediter(compteCourant, compteEpargne, 400);
-            System.out.println("Après crédit du compte courant");
-            System.out.println("liste compte courant :");
+            compteCourant.setSeuilMin(50);
+            compteCourant.setSolde(0);
+            System.out.println("Après changement seuil min");
             AffichageCollections(context.getCompteCourants());
-            System.out.println("liste compte epargne :");
             AffichageCollections(context.getCompteEpargnes());
-            System.out.println("liste opérations :");
             AffichageCollections(context.getOperations());
 
+            context.crediter(compteCourant, compteEpargne, 200);
+            System.out.println("Après crédit sur compte courant");
+            AffichageCollections(context.getCompteCourants());
+            AffichageCollections(context.getCompteEpargnes());
+            AffichageCollections(context.getOperations());
+
+            context.debiter(compteCourant, 100);
+            System.out.println("Après débit sur compte courant");
+            AffichageCollections(context.getCompteCourants());
+            AffichageCollections(context.getCompteEpargnes());
+            AffichageCollections(context.getOperations());
 
             Thread.sleep(100);
             System.out.println("Calcul taux d'intérêts");
-            System.out.println("liste compte epargne :");
             AffichageCollections(context.getCompteEpargnes());
-            System.out.println("liste opérations :");
             AffichageCollections(context.getOperations());
 
             context.close();
